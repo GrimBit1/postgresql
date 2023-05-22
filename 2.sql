@@ -14,6 +14,12 @@ CREATE TABLE users(
 -- insert into is tricky 
 -- insert into the table using schema
 INSERT INTO users(name, bio)
-values ('Aditya', 'Student');
+values ('Aditya', 'Aditya');
+-- select all  from users
 SELECT *
 FROM users;
+
+-- select a custom column from table
+SELECT * FROM users ORDER BY id ASC;
+-- select a custom column but with unique rows
+SELECT  bio FROM users ORDER BY bio ASC;
