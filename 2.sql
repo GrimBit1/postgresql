@@ -15,18 +15,18 @@ CREATE TABLE users(
 -- insert into the table using schema
 INSERT INTO users(name, bio)
 values ('Aditya', 'Aditya');
--- select all  from users
+-- SELECT all  FROM users
 SELECT *
 FROM users;
--- select a custom column from table
+-- SELECT a custom column FROM table
 SELECT *
 FROM users
 ORDER BY id ASC;
--- select a custom column but with unique rows
+-- SELECT a custom column but with unique rows
 SELECT bio
 FROM users
 ORDER BY bio ASC;
--- select column with condition 
+-- SELECT column with condition 
 SELECT name
 FROM users
 WHERE name = 'Aditya';
@@ -101,42 +101,90 @@ FROM cars;
 /* Returns the sum of all amount present in the table */
 SELECT SUM(money)
 FROM cars;
-select *
-from cars;
+SELECT *
+FROM cars;
 -- Arthemtic oprator just like any other languages
 -- +(add) -(sub) *(multiply) /(divide) ^(power of) %(remainder)
 -- Advanced arthemtic operator
-select *,
+SELECT *,
     round(money *.10, 2) as discount,
     round(money - money *.10, 2) as discounted_price
-from cars;
+FROM cars;
 -- Coalesce keyword 
-select Coalesce(null, 1);
+SELECT Coalesce(null, 1);
 /*  It gives the other value if first on is null */
 -- Nullif / nullif takes two arguement and if both are equal then return null
-select nullif(0, 0);
+SELECT nullif(0, 0);
 -- it is used to error handling in postgres
 -- Now() operator / returns the timestamp when the function is called 
-select Now();
-select Now()::Date;
+SELECT Now();
+SELECT Now()::Date;
 /* return only date */
-select Now()::Time;
+SELECT Now()::Time;
 /* return only time */
 -- Interval Operator
-select Now() - INTERVAL '1 Year';
+SELECT Now() - INTERVAL '1 Year';
 -- Extract operator
-select Extract(
+SELECT Extract(
         Year
-        from now()
+        FROM now()
     );
 -- Age operator
-select age(now(), '2023-05-26');
+SELECT age(now(), '2023-05-26');
 /* Age takes two arguements / first now current timestamp / second date */
 -- Primary Keys
 insert into users (id, name, bio)
 values (1, 'Madelene', 'Chemical Engineer');
- /* Gives error :duplicate key value violates unique constraint "users_pkey" */
-
+/* Gives error :duplicate key value violates unique constraint "users_pkey" */
 -- Constraints
 -- Check Constraints
-Alter TABLE users ADD  UNIQUE (name);
+Alter TABLE users
+ADD UNIQUE (name);
+-- Delete 
+Delete FROM users
+where name = 'Aditya';
+/* Dont use this ever */
+Delete FROM users;
+/* It will delete whole table */
+SELECT *
+FROM users;
+-- Update operator 
+update users
+SET name = 'Aditya Bada'
+WHERE name = 'Aditya';
+update users
+SET name = 'Aditya',
+    bio = 'Full Stack developer'
+WHERE name = 'Aditya Bada';
+/*  if want to update multiple values */
+/* Always use where clause with delete and update */
+-- Error handling
+-- On Conflict only works on unique column
+INSERT INTO users (id, name, bio)
+values (1, 'Aditya', 'Full Stack Developer');
+/* This will give error that this key is already used */
+INSERT INTO users (id, name, bio)
+values (1, 'Aditya', 'Full Stack Developer') on Conflict(id) Do Nothing;
+/* So this is error handled */
+-- Foreign keys for relationship between tables
+SELECT *
+FROM person;
+-- Inner joins
+SELECT *
+FROM person
+    JOIN car on person.car_id = car.id;
+/*  This gives only row which both have same reference no */
+-- Left Joins
+SELECT *
+FROM person
+    LEFT JOIN car on person.car_id = car.id;
+/*Left join means take all row from a and only join row from b and return and which dot have relationship will also get included*/
+-- Delete record with foreign key
+/* Just remove the car id which we want to delete from the row it is using and then delete */
+-- Alter sequence 
+ALTER SEQUENCE person_id_seq RESTART WITH 1;
+-- Extensions 
+SELECT *
+from pg_available_extensions;
+create EXTENSION if not exists "uuid-ossp";
+select uuid_generate_v4() ;
