@@ -188,3 +188,15 @@ SELECT *
 from pg_available_extensions;
 create EXTENSION if not exists "uuid-ossp";
 select uuid_generate_v4() ;
+
+select * from car where price = (select min(price) from car);
+
+--Extra
+Show ALL;
+Show TIMEZONE;
+
+select * from users where name = 'Aditya';
+insert into users (name, bio) values ('Aditya', 'Full Stack Developer');
+select * from people where first_name in(select name from users);
+
+-- Exists

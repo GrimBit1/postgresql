@@ -946,7 +946,7 @@ insert into users (name, bio) values ('Valma', 'Teacher');
 insert into users (name, bio) values ('Garrot', 'Human Resources Assistant III');
 insert into users (name, bio) values ('Lemar', 'Account Coordinator');
 insert into users (name, bio) values ('Piggy', 'VP Sales');
-insert into users (name, bio) values ('Johnath', 'Technical Writer');
+INSERT into users (name, bio) values ('Johnath', 'Technical Writer');
 insert into users (name, bio) values ('Livvie', 'Accounting Assistant IV');
 insert into users (name, bio) values ('Vivien', 'VP Marketing');
 insert into users (name, bio) values ('Marcello', 'Civil Engineer');
