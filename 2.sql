@@ -200,3 +200,4 @@ insert into users (name, bio) values ('Aditya', 'Full Stack Developer');
 select * from people where first_name in(select name from users);
 
 -- Exists
+select * from people where first_name in Exists(select name from users);
