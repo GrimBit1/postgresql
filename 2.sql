@@ -107,8 +107,8 @@ FROM cars;
 -- +(add) -(sub) *(multiply) /(divide) ^(power of) %(remainder)
 -- Advanced arthemtic operator
 SELECT *,
-    round(money *.10, 2) as discount,
-    round(money - money *.10, 2) as discounted_price
+    round(money *.10, 2) AS discount,
+    round(money - money *.10, 2) AS discounted_price
 FROM cars;
 -- Coalesce keyword 
 SELECT Coalesce(null, 1);
@@ -187,17 +187,75 @@ ALTER SEQUENCE person_id_seq RESTART WITH 1;
 SELECT *
 from pg_available_extensions;
 create EXTENSION if not exists "uuid-ossp";
-select uuid_generate_v4() ;
-
-select * from car where price = (select min(price) from car);
-
+select uuid_generate_v4();
+select *
+from car
+where price = (
+        select min(price)
+        from car
+    );
 --Extra
 Show ALL;
 Show TIMEZONE;
-
-select * from users where name = 'Aditya';
-insert into users (name, bio) values ('Aditya', 'Full Stack Developer');
-select * from people where first_name in(select name from users);
-
+select *
+from users
+where name = 'Aditya';
+insert into users (name, bio)
+values ('Aditya', 'Full Stack Developer');
+select *
+from people
+where first_name in(
+        select name
+        from users
+    );
 -- Exists
-select * from people where first_name in Exists(select name from users);
+select *
+from people
+where first_name in Exists(
+        select name
+        from users
+    );
+SELECT '5'::integer;
+SELECT CAST('5' as integer);
+--Views
+/* Views are just virtual table or snippets for a query so we can use view instead of writing the query more and more */
+create View aditya as
+select *
+from users
+where name = 'Aditya';
+/* This will create a virtual table using the query */
+create or replace View aditya as
+select *
+from users
+where name = 'Aditya';
+/* This will overwrite existing table */
+drop view if exists aditya;
+-- Materialized view 
+create materialized view mv_rand_table as
+select id,
+    avg(val),
+    count(*)
+from rand_table
+group by id;
+/* This will store the data came from the query and will store it */
+-- So it will not give updated data
+-- Refresh Materialized view
+refresh materialized view mv_rand_table;
+/* This will refresh the data */
+-- Trigger
+/* Trigger will is a function which will run on changes based given condition */
+/* Two types of triiger  */
+-- Row level
+-- Statement level
+/* First create a function */
+CREATE FUNCTION trigger_function() RETURNS TRIGGER LANGUAGE PLPGSQL AS $$ BEGIN -- trigger logic
+END;
+$$;
+CREATE TRIGGER trigger_name
+AFTER
+INSERT ON people FOR EACH ROW EXECUTE PROCEDURE trigger_function();
+
+insert into people
+select 1,random() ;
+
+select * from people cross join person on people.id = person.id;
