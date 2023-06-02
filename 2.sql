@@ -151,7 +151,7 @@ FROM users;
 -- Update operator 
 update users
 SET name = 'Aditya Bada'
-WHERE name = 'Aditya';
+WHERE name = 'Aditya' ;
 update users
 SET name = 'Aditya',
     bio = 'Full Stack developer'
@@ -259,3 +259,6 @@ insert into people
 select 1,random() ;
 
 select * from people cross join person on people.id = person.id;
+DROP TRIGGER trigger_name ON people;
+
+select * from people;
